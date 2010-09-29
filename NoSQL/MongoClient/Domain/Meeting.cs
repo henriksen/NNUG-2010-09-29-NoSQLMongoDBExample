@@ -5,6 +5,7 @@ namespace MongoClient.Domain
 {
     public class Meeting
     {
+        public int ID { get; set; }
         public DateTime StartTime { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
