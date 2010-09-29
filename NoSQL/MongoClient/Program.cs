@@ -13,6 +13,8 @@ namespace MongoClient
         {
             using (var db = Mongo.Create("mongodb://localhost/NNUG"))
             {
+                db.Database.DropCollection("Meeting");
+
                 var meetings = db.GetCollection<Meeting>();
 
                 //insert into collection
@@ -20,7 +22,24 @@ namespace MongoClient
                 {
                     ID = 1,
                     Location = "ErgoGroup",
-                    Description = "ASP.NET MVC, Bing Maps og Silverlight, NoSQL. Og pizza!"
+                    Description = "ASP.NET MVC, Bing Maps og Silverlight, NoSQL. Og pizza!",
+                    StartTime = new DateTime(2010, 9, 29, 16, 30, 00),
+                    Talks = new List<Talk> { new Talk
+                                                 {
+                                                     Speaker = new Person() { Firstname = "Fredrik", Lastname = "Kalseth"},
+                                                     Topic = "ASP.NET MVC 3"
+                                                 }, 
+                                            new Talk
+                                                 {
+                                                     Speaker = new Person { Firstname = "Niall", Lastname = "Merrigan"},
+                                                     Topic = "Bing maps and YR.no mashup"
+                                                 }, 
+                                            new Talk
+                                                 {
+                                                     Speaker = new Person { Firstname = "Glenn", Lastname = "Henriksen"},
+                                                     Topic = "NoSQL"
+                                                 }, 
+                    }
                 });
 
 
