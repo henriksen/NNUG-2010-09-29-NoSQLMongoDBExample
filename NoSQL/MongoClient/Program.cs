@@ -41,15 +41,34 @@ namespace MongoClient
                                                  }, 
                     }
                 });
+                meetings.Insert(new Meeting
+                {
+                    ID = 2,
+                    Location = "Capgemeni",
+                    Description = "TDD, BDD and pizza!",
+                    StartTime = new DateTime(2009, 8, 12, 16, 30, 00),
+                    Talks = new List<Talk> { new Talk
+                                                 {
+                                                     Speaker = new Person() { Firstname = "Fredrik", Lastname = "Kalseth"},
+                                                     Topic = "Test driven development"
+                                                 }, 
+                                            new Talk
+                                                 {
+                                                     Speaker = new Person { Firstname = "Glenn", Lastname = "Henriksen"},
+                                                     Topic = "Behaviour driven development"
+                                                 }, 
+                    }
+                });
 
 
                 var query = db.GetCollection<Meeting>().AsQueryable();
                 //find a post by id
-                var meeting = query.FirstOrDefault(p => p.ID == 1);
+                var glennsMeetings = query.Where(p => p.Talks.Any( t => t.Speaker.Firstname == "Glenn") );
 
-                //update the post.
-                meeting.Location = "ErgoGroup, Maskinveien 32";
-                meetings.Save(meeting);
+                foreach (var meeting in glennsMeetings)
+                {
+                    Console.WriteLine(meeting.Location);
+                }
 
                 Console.ReadLine();
             }
